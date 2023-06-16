@@ -20,9 +20,14 @@ class AsbruConnectionManager(Extension):
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
 class KeywordQueryEventListener(EventListener):
+    def __init__(self):
+        self.connections = asbru_tools.get_connections()
+    
     def on_event(self, event, extension):
         search_query = event.get_argument()
-        connections = asbru_tools.get_connections()
+        # connections = asbru_tools.get_connections()
+        connections = self.connections
+    
         connections = sorted(connections, key=lambda d: d["name"].lower())
 
         items = []
@@ -31,9 +36,9 @@ class KeywordQueryEventListener(EventListener):
             if search_query is not None and search_query not in name.lower():
                 continue
 
-            description = "Probando Ando"
+            description = "Connect to %s"%a["server"]
             icon_path = 'images/network-server.svg'
-
+            
             if not os.path.isfile(icon_path):
                 logger.warning("Icon not found: " + icon_path)
 
@@ -48,10 +53,17 @@ class KeywordQueryEventListener(EventListener):
 
 class ItemEnterEventListener(EventListener):
     def on_event(self, event, extension):
-        con = event.get_data()
+        data = event.get_data()
+        uuid = data["uuid"]
         
-        asbru_tools.send_notification("Hola Mundo %s"%str(con))
-
+        result = asbru_tools.connect(uuid)
+        if extension.preferences.get("enable_notifications") == "true":
+            if not result:
+                # Operation failed
+                asbru_tools.send_notification("Operation failed: ")
+            else:
+                # Success, connected
+                asbru_tools.send_notification("Now connected: %s: %s"%(data["name"]), data["server"])
 
 if __name__ == '__main__':
     AsbruConnectionManager().run()
