@@ -1,6 +1,6 @@
 {
     "required_api_version": "^2.0.0",
-    "name": "Asbru connection Manger",
+    "name": "Ásbrú connection Manager",
     "description": "Co",
     "developer_name": "Robinson Giraldo Naranjo",
     "icon": "images/icon.svg",
@@ -11,6 +11,22 @@
         "name": "Main keyword",
         "description": "",
         "default_value": "asbru"
+      },
+      {
+        "id": "enable_notifications",
+        "type": "select",
+        "name": "Enable notifications",
+        "default_value": true,
+        "options": [
+          {
+            "text": "Yes",
+            "value": true
+          },
+          {
+            "text": "No",
+            "value": false
+          }
+        ]
       }
     ]
   }
