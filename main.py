@@ -55,15 +55,14 @@ class ItemEnterEventListener(EventListener):
     def on_event(self, event, extension):
         data = event.get_data()
         uuid = data["uuid"]
-        
         result = asbru_tools.connect(uuid)
         if extension.preferences.get("enable_notifications") == "true":
             if not result:
                 # Operation failed
-                asbru_tools.send_notification("Operation failed: ")
+                asbru_tools.send_notification("Operation failed ")
             else:
                 # Success, connected
-                asbru_tools.send_notification("Now connected: %s: %s"%(data["name"]), data["server"])
+                asbru_tools.send_notification("Now connected: %s"%data["name"])
 
 if __name__ == '__main__':
     AsbruConnectionManager().run()
