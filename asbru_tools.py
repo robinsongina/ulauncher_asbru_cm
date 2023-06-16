@@ -12,7 +12,7 @@ def get_connections():
         
         for group in groups:
             tmp= [ { "uuid": conn.split("|")[0].strip(), "name": conn.split("|")[-1].strip() } for conn in connections if group["uuid"] in conn and "SSH" in conn]
-            connections_for_groups.append({ group["name"]: tmp })
+            connections_for_groups.append({ "name": group["name"], "servers": tmp })
     except:
         return []
    
