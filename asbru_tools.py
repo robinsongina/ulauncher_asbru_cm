@@ -1,5 +1,13 @@
 import subprocess
-from pprint import pprint
+import os
+
+def send_notification(text):
+    subprocess.run(["notify-send",
+                    "-h", "int:transient:1",
+                    "--icon=" + os.path.dirname(os.path.realpath(__file__)) + "/images/icon.svg",
+                    text,
+                    "ULauncher AsbruConnectionManager"
+                    ])
 
 def get_connections():
     process = subprocess.run(['asbru-cm', '--list-uuids'], stdout = subprocess.PIPE)

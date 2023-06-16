@@ -23,7 +23,7 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         search_query = event.get_argument()
         connections = asbru_tools.get_connections()
-        # connections = sorted(connections, key=lambda d: d["name"].lower())
+        connections = sorted(connections, key=lambda d: d["name"].lower())
 
         items = []
         for a in connections:
@@ -48,7 +48,9 @@ class KeywordQueryEventListener(EventListener):
 
 class ItemEnterEventListener(EventListener):
     def on_event(self, event, extension):
-        pass
+        con = event.get_data()
+        
+        asbru_tools.send_notification("Hola Mundo %s"%str(con))
 
 
 if __name__ == '__main__':
